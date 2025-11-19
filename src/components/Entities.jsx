@@ -109,6 +109,10 @@ export function Customers() {
     { name: 'company', label: 'Company' },
     { name: 'email', label: 'Email' },
     { name: 'stage', label: 'Stage' },
+    // Location
+    { name: 'location', label: 'Location', placeholder: 'City, State / Country' },
+    { name: 'latitude', label: 'Lat', placeholder: 'e.g., 37.7749' },
+    { name: 'longitude', label: 'Lng', placeholder: '-122.4194' },
   ]), [])
   return <List title="Customers" endpoint="/api/customers" fields={fields} />
 }
