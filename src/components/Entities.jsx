@@ -13,7 +13,7 @@ function List({ title, endpoint, fields, afterCreate }) {
     try {
       const url = new URL(`${baseUrl}${endpoint}`)
       if (search) url.searchParams.set('search', search)
-      const res = await fetch(url)
+      const res = await fetch(url, { headers: authHeaders() })
       if (!res.ok) throw new Error(`Failed: ${res.status}`)
       const data = await res.json()
       setItems(data)
@@ -28,7 +28,7 @@ function List({ title, endpoint, fields, afterCreate }) {
     try {
       const res = await fetch(`${baseUrl}${endpoint}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...authHeaders() },
         body: JSON.stringify(form)
       })
       if (!res.ok) throw new Error('Create failed')
@@ -101,6 +101,11 @@ function List({ title, endpoint, fields, afterCreate }) {
       )}
     </div>
   )
+}
+
+function authHeaders() {
+  const token = localStorage.getItem('auth_token')
+  return token ? { Authorization: `Bearer ${token}` } : {}
 }
 
 export function Customers() {

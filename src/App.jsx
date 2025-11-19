@@ -1,10 +1,21 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Navbar from './components/Navbar'
 import Overview from './components/Overview'
 import { Customers, Leads, Activities, Tickets } from './components/Entities'
 
 function App() {
   const [tab, setTab] = useState('overview')
+  const [authed, setAuthed] = useState(false)
+
+  useEffect(() => {
+    const token = localStorage.getItem('auth_token')
+    setAuthed(!!token)
+  }, [])
+
+  if (!authed) {
+    window.location.href = '/login'
+    return null
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
